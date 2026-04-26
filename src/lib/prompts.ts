@@ -1,0 +1,2 @@
+export const SCAMVOICE_ANALYZE_PROMPT = '';
+export const SCAMVOICE_TRANSCRIBE_PROMPT = '';
