@@ -20,7 +20,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="px-margin pt-md">
+      <main className="px-5 pt-6">
         {/* Hero Section */}
         <section className="mb-lg">
           <h2 className="font-headline-xl text-headline-xl text-white mb-2">Stay Safe Right Now</h2>
@@ -28,11 +28,11 @@ export default function HomePage() {
         </section>
 
         {/* Main Action Stack */}
-        <div className="space-y-md">
+        <div className="space-y-4">
           {/* Primary Action */}
           <button 
             onClick={() => router.push('/live')}
-            className="w-full bg-[#E24B4A] rounded-xl p-md flex items-center justify-between transition-all duration-200 active:scale-95 group relative overflow-hidden"
+            className="w-full bg-[#E24B4A] rounded-xl p-6 flex items-center justify-between transition-all duration-200 active:scale-95 group relative overflow-hidden"
           >
             <div className="flex flex-col items-start text-left z-10">
               <span className="font-label-bold text-white mb-1">Start Live Protection</span>
@@ -48,40 +48,40 @@ export default function HomePage() {
           {/* Secondary Action 1 */}
           <button 
             onClick={() => router.push('/analyze')}
-            className="w-full bg-white rounded-xl p-md flex items-center justify-between shadow-[0_10px_30px_rgba(4,7,15,0.15)] transition-all duration-200 active:scale-95 group"
+            className="w-full bg-[#161E31] rounded-xl p-6 border border-[#2A354F] flex items-center justify-between shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 active:scale-95 group hover:bg-[#2A354F]/50"
           >
             <div className="flex flex-col items-start text-left">
-              <span className="font-label-bold text-[#0A0F1E] mb-1">Analyze Transcript</span>
-              <span className="text-xs text-slate-500 font-medium">Paste text for risk scoring</span>
+              <span className="font-label-bold text-white mb-1">Analyze Transcript</span>
+              <span className="text-xs text-slate-400 font-medium">Paste text for risk scoring</span>
             </div>
-            <span className="material-symbols-outlined text-[#0A0F1E]">description</span>
+            <span className="material-symbols-outlined text-white">description</span>
           </button>
 
           {/* Secondary Action 2 */}
           <button 
             onClick={() => router.push('/demo')}
-            className="w-full bg-white rounded-xl p-md flex items-center justify-between shadow-[0_10px_30px_rgba(4,7,15,0.15)] transition-all duration-200 active:scale-95 group"
+            className="w-full bg-[#161E31] rounded-xl p-6 border border-[#2A354F] flex items-center justify-between shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-200 active:scale-95 group hover:bg-[#2A354F]/50"
           >
             <div className="flex flex-col items-start text-left">
-              <span className="font-label-bold text-[#0A0F1E] mb-1">Try Demo</span>
-              <span className="text-xs text-slate-500 font-medium">Simulate a scam interaction</span>
+              <span className="font-label-bold text-white mb-1">Try Demo</span>
+              <span className="text-xs text-slate-400 font-medium">Simulate a scam interaction</span>
             </div>
-            <span className="material-symbols-outlined text-[#0A0F1E]">play_circle</span>
+            <span className="material-symbols-outlined text-white">play_circle</span>
           </button>
         </div>
 
         {/* Secondary Grid */}
-        <div className="grid grid-cols-2 gap-gutter mt-md">
+        <div className="grid grid-cols-2 gap-4 mt-6">
           <div 
             onClick={() => router.push('/learn')}
-            className="bg-[#161E31] p-md rounded-xl border border-[#2A354F] transition-all hover:opacity-80 cursor-pointer"
+            className="bg-[#161E31] p-6 rounded-xl border border-[#2A354F] transition-all hover:opacity-80 cursor-pointer"
           >
             <span className="material-symbols-outlined text-[#E24B4A] mb-sm">menu_book</span>
             <p className="font-label-bold text-white text-xs uppercase tracking-wider">Learn Scams</p>
           </div>
           <div 
             onClick={() => router.push('/history')}
-            className="bg-[#161E31] p-md rounded-xl border border-[#2A354F] transition-all hover:opacity-80 cursor-pointer"
+            className="bg-[#161E31] p-6 rounded-xl border border-[#2A354F] transition-all hover:opacity-80 cursor-pointer"
           >
             <span className="material-symbols-outlined text-[#E24B4A] mb-sm">history</span>
             <p className="font-label-bold text-white text-xs uppercase tracking-wider">History</p>

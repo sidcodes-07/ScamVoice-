@@ -43,98 +43,98 @@ export default function HistoryPage() {
         {/* Logs List */}
         <section className="grid grid-cols-1 gap-6">
           {/* Scam Log Card */}
-          <div className="bg-white rounded-3xl p-6 ambient-card-shadow flex flex-col gap-6 border-l-[6px] border-[#E24B4A] transition-transform hover:scale-[1.01] duration-300">
+          <div className="bg-[#161E31] rounded-3xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col gap-6 border border-[#2A354F] border-l-[6px] border-l-[#E24B4A] transition-transform hover:scale-[1.01] duration-300">
             <div className="flex justify-between items-start">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <span className="bg-[#E24B4A] text-white font-black text-[9px] px-2 py-1 rounded-md uppercase tracking-widest shadow-md shadow-[#E24B4A]/20">SCAM</span>
-                  <h3 className="font-bold text-slate-900 text-lg uppercase tracking-tight">LIVE ANALYSIS (98%)</h3>
+                  <h3 className="font-bold text-white text-lg uppercase tracking-tight">LIVE ANALYSIS (98%)</h3>
                 </div>
                 <div className="flex flex-wrap items-center gap-4 text-slate-400 font-bold text-[10px] uppercase tracking-widest">
                   <span className="flex items-center gap-2"><span className="material-symbols-outlined text-base">calendar_today</span> Oct 24, 2023</span>
                   <span className="flex items-center gap-2"><span className="material-symbols-outlined text-base">schedule</span> 14:32 PM</span>
                 </div>
               </div>
-              <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+              <button className="p-2 hover:bg-[#2A354F] rounded-full transition-colors">
                 <span className="material-symbols-outlined text-slate-400">more_vert</span>
               </button>
             </div>
             
-            <div className="bg-slate-50 p-4 rounded-2xl flex items-center justify-between border border-slate-100">
+            <div className="bg-[#0A0F1E] p-4 rounded-2xl flex items-center justify-between border border-[#2A354F]">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center shadow-inner">
+                <div className="w-12 h-12 rounded-xl bg-[#E24B4A]/10 flex items-center justify-center shadow-inner">
                   <span className="material-symbols-outlined text-[#E24B4A] fill text-2xl">record_voice_over</span>
                 </div>
                 <div>
-                  <p className="text-slate-900 text-sm font-bold">Incoming Voice Call</p>
+                  <p className="text-white text-sm font-bold">Incoming Voice Call</p>
                   <p className="text-slate-500 text-xs font-medium">Deepfake Patterns Detected</p>
                 </div>
               </div>
-              <span className="material-symbols-outlined text-slate-300">chevron_right</span>
+              <span className="material-symbols-outlined text-slate-500">chevron_right</span>
             </div>
           </div>
 
           {/* Verified Log Card */}
-          <div className="bg-white rounded-3xl p-6 ambient-card-shadow flex flex-col gap-6 border-l-[6px] border-slate-900 transition-transform hover:scale-[1.01] duration-300">
+          <div className="bg-[#161E31] rounded-3xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col gap-6 border border-[#2A354F] border-l-[6px] border-l-[#414658] transition-transform hover:scale-[1.01] duration-300">
             <div className="flex justify-between items-start">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="bg-slate-900 text-white font-black text-[9px] px-2 py-1 rounded-md uppercase tracking-widest">VERIFIED</span>
-                  <h3 className="font-bold text-slate-900 text-lg uppercase tracking-tight">TRANSCRIPT SCAN (02%)</h3>
+                  <span className="bg-[#414658] text-white font-black text-[9px] px-2 py-1 rounded-md uppercase tracking-widest">VERIFIED</span>
+                  <h3 className="font-bold text-white text-lg uppercase tracking-tight">TRANSCRIPT SCAN (02%)</h3>
                 </div>
                 <div className="flex flex-wrap items-center gap-4 text-slate-400 font-bold text-[10px] uppercase tracking-widest">
                   <span className="flex items-center gap-2"><span className="material-symbols-outlined text-base">calendar_today</span> Oct 23, 2023</span>
                   <span className="flex items-center gap-2"><span className="material-symbols-outlined text-base">schedule</span> 09:15 AM</span>
                 </div>
               </div>
-              <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+              <button className="p-2 hover:bg-[#2A354F] rounded-full transition-colors">
                 <span className="material-symbols-outlined text-slate-400">more_vert</span>
               </button>
             </div>
             
-            <div className="bg-slate-50 p-4 rounded-2xl flex items-center justify-between border border-slate-100">
+            <div className="bg-[#0A0F1E] p-4 rounded-2xl flex items-center justify-between border border-[#2A354F]">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shadow-inner">
-                  <span className="material-symbols-outlined text-slate-900 fill text-2xl">description</span>
+                <div className="w-12 h-12 rounded-xl bg-[#2A354F] flex items-center justify-center shadow-inner">
+                  <span className="material-symbols-outlined text-slate-300 fill text-2xl">description</span>
                 </div>
                 <div>
-                  <p className="text-slate-900 text-sm font-bold">SMS Transcript</p>
+                  <p className="text-white text-sm font-bold">SMS Transcript</p>
                   <p className="text-slate-500 text-xs font-medium">Official Banking Communication</p>
                 </div>
               </div>
-              <span className="material-symbols-outlined text-slate-300">chevron_right</span>
+              <span className="material-symbols-outlined text-slate-500">chevron_right</span>
             </div>
           </div>
 
           {/* Unknown Log Card */}
-          <div className="bg-white rounded-3xl p-6 ambient-card-shadow flex flex-col gap-6 border-l-[6px] border-slate-200 transition-transform hover:scale-[1.01] duration-300">
+          <div className="bg-[#161E31] rounded-3xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col gap-6 border border-[#2A354F] border-l-[6px] border-l-[#8890a8] transition-transform hover:scale-[1.01] duration-300">
             <div className="flex justify-between items-start">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="bg-slate-200 text-slate-600 font-black text-[9px] px-2 py-1 rounded-md uppercase tracking-widest">UNKNOWN</span>
-                  <h3 className="font-bold text-slate-900 text-lg uppercase tracking-tight">LIVE ANALYSIS (42%)</h3>
+                  <span className="bg-[#8890a8] text-white font-black text-[9px] px-2 py-1 rounded-md uppercase tracking-widest">UNKNOWN</span>
+                  <h3 className="font-bold text-white text-lg uppercase tracking-tight">LIVE ANALYSIS (42%)</h3>
                 </div>
                 <div className="flex flex-wrap items-center gap-4 text-slate-400 font-bold text-[10px] uppercase tracking-widest">
                   <span className="flex items-center gap-2"><span className="material-symbols-outlined text-base">calendar_today</span> Oct 22, 2023</span>
                   <span className="flex items-center gap-2"><span className="material-symbols-outlined text-base">schedule</span> 18:45 PM</span>
                 </div>
               </div>
-              <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+              <button className="p-2 hover:bg-[#2A354F] rounded-full transition-colors">
                 <span className="material-symbols-outlined text-slate-400">more_vert</span>
               </button>
             </div>
             
-            <div className="bg-slate-50 p-4 rounded-2xl flex items-center justify-between border border-slate-100">
+            <div className="bg-[#0A0F1E] p-4 rounded-2xl flex items-center justify-between border border-[#2A354F]">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shadow-inner">
-                  <span className="material-symbols-outlined text-slate-600 fill text-2xl">call</span>
+                <div className="w-12 h-12 rounded-xl bg-[#2A354F] flex items-center justify-center shadow-inner">
+                  <span className="material-symbols-outlined text-slate-300 fill text-2xl">call</span>
                 </div>
                 <div>
-                  <p className="text-slate-900 text-sm font-bold">Incoming PSTN Call</p>
+                  <p className="text-white text-sm font-bold">Incoming PSTN Call</p>
                   <p className="text-slate-500 text-xs font-medium">Inconclusive Voice Sample</p>
                 </div>
               </div>
-              <span className="material-symbols-outlined text-slate-300">chevron_right</span>
+              <span className="material-symbols-outlined text-slate-500">chevron_right</span>
             </div>
           </div>
         </section>

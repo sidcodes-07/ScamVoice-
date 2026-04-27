@@ -23,7 +23,7 @@ export default function LiveProtectionPage() {
         </div>
       </header>
 
-      <main className="pt-24 px-margin space-y-6 max-w-xl mx-auto pb-48">
+      <main className="pt-24 px-5 space-y-6 max-w-xl mx-auto pb-48">
         {/* Status Indicator */}
         <div className="flex justify-center items-center py-5 bg-[#161E31]/60 rounded-2xl border border-[#2A354F]/40 backdrop-blur-lg shadow-xl">
           <div className="flex items-center gap-4">
@@ -39,10 +39,10 @@ export default function LiveProtectionPage() {
         </div>
 
         {/* Threat Analysis Card */}
-        <section className="bg-white rounded-2xl p-6 ambient-shadow relative overflow-hidden border border-white/20">
+        <section className="bg-[#161E31] rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] relative overflow-hidden border border-[#2A354F]">
           <div className="flex justify-between items-start mb-6">
             <div>
-              <h2 className="text-[#0A0F1E] font-headline-md uppercase tracking-tight leading-none mb-1">Threat Analysis</h2>
+              <h2 className="text-white font-headline-md uppercase tracking-tight leading-none mb-1">Threat Analysis</h2>
               <p className="text-slate-500 text-[10px] font-bold tracking-widest uppercase">Real-time Risk Assessment</p>
             </div>
             <span className="bg-[#E24B4A] text-white font-bold px-3 py-1 rounded-full text-[10px] shadow-lg shadow-[#E24B4A]/20">HIGH RISK</span>
@@ -56,7 +56,7 @@ export default function LiveProtectionPage() {
                 <circle cx="50" cy="50" fill="transparent" r="44" stroke="#E24B4A" strokeDasharray="276.46" strokeDashoffset="77.4" strokeLinecap="round" strokeWidth="8"></circle>
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-[#0A0F1E] text-3xl font-extrabold leading-none">72%</span>
+                <span className="text-white text-3xl font-extrabold leading-none">72%</span>
               </div>
             </div>
             
@@ -66,26 +66,26 @@ export default function LiveProtectionPage() {
                 <span className="bg-[#E24B4A]/10 text-[#E24B4A] font-bold px-2 py-1 rounded text-[9px] uppercase border border-[#E24B4A]/20">Authority</span>
                 <span className="bg-[#E24B4A]/10 text-[#E24B4A] font-bold px-2 py-1 rounded text-[9px] uppercase border border-[#E24B4A]/20">Isolation</span>
               </div>
-              <p className="text-[#0A0F1E] text-sm leading-relaxed font-medium">Multiple psychological triggers detected. Caller is attempting to pressure financial action.</p>
+              <p className="text-slate-300 text-sm leading-relaxed font-medium">Multiple psychological triggers detected. Caller is attempting to pressure financial action.</p>
             </div>
           </div>
         </section>
 
         {/* Live Transcript Card */}
-        <section className="bg-white rounded-2xl p-6 ambient-shadow border border-white/20">
-          <div className="flex items-center gap-3 mb-5 border-b border-slate-100 pb-3">
+        <section className="bg-[#161E31] rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-[#2A354F]">
+          <div className="flex items-center gap-3 mb-5 border-b border-[#2A354F] pb-3">
             <span className="material-symbols-outlined text-slate-400 text-xl">article</span>
-            <h3 className="text-[#0A0F1E] font-bold uppercase tracking-wide text-sm">Live Transcript</h3>
+            <h3 className="text-white font-bold uppercase tracking-wide text-sm">Live Transcript</h3>
           </div>
           
           <div className="space-y-6 max-h-[280px] overflow-y-auto transcript-gradient pr-2 custom-scrollbar">
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
-                <span className="material-symbols-outlined text-slate-500 text-lg">person</span>
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-[#2A354F] flex items-center justify-center">
+                <span className="material-symbols-outlined text-slate-400 text-lg">person</span>
               </div>
               <div className="space-y-1">
-                <span className="font-bold text-[#0A0F1E] text-[10px] tracking-widest uppercase opacity-50">[CALLER]</span>
-                <p className="text-[#0A0F1E] text-sm leading-relaxed">Hello, I am calling from the bank regarding an unauthorized transaction of ₹48,000 on your account.</p>
+                <span className="font-bold text-slate-400 text-[10px] tracking-widest uppercase">[CALLER]</span>
+                <p className="text-slate-200 text-sm leading-relaxed">Hello, I am calling from the bank regarding an unauthorized transaction of ₹48,000 on your account.</p>
               </div>
             </div>
 
@@ -100,17 +100,17 @@ export default function LiveProtectionPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
-                <span className="material-symbols-outlined text-slate-500 text-lg">person</span>
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-[#2A354F] flex items-center justify-center">
+                <span className="material-symbols-outlined text-slate-400 text-lg">person</span>
               </div>
               <div className="space-y-1">
                 <span className="font-bold text-[#E24B4A] text-[10px] tracking-widest uppercase">[CALLER]</span>
-                <p className="text-[#0A0F1E] text-sm leading-relaxed">We have blocked the SMS to prevent further data breach. You must confirm your identity now or your account will be permanently frozen in 5 minutes.</p>
+                <p className="text-slate-200 text-sm leading-relaxed">We have blocked the SMS to prevent further data breach. You must confirm your identity now or your account will be permanently frozen in 5 minutes.</p>
               </div>
             </div>
 
             <div className="flex gap-4 animate-pulse">
-              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-[#2A354F] flex items-center justify-center">
                 <span className="material-symbols-outlined text-[#E24B4A] text-lg">psychology</span>
               </div>
               <div className="space-y-1">

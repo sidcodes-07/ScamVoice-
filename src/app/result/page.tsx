@@ -65,14 +65,14 @@ export default function AnalysisResultPage() {
           {/* Left Column: Evidence */}
           <section>
             <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">KEY EVIDENCE</h3>
-            <div className="bg-white rounded-2xl p-6 ambient-shadow border-l-[6px] border-[#E24B4A] h-full">
+            <div className="bg-[#161E31] rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-[#2A354F] border-l-[6px] border-l-[#E24B4A] h-full">
               <span className="material-symbols-outlined text-[#E24B4A] text-2xl mb-4 block fill opacity-20">format_quote</span>
-              <p className="text-[#0A0F1E] font-medium text-base italic leading-relaxed mb-6">
+              <p className="text-white font-medium text-base italic leading-relaxed mb-6">
                 "Your account will freeze immediately unless you verify your identity through the external secure portal we are sending..."
               </p>
-              <div className="flex items-center gap-3 py-3 border-t border-slate-100">
+              <div className="flex items-center gap-3 py-3 border-t border-[#2A354F]">
                 <span className="w-3 h-3 rounded-full bg-[#E24B4A] animate-pulse"></span>
-                <span className="text-[10px] text-[#0A0F1E] uppercase font-extrabold tracking-wider">Urgency Trigger Detected</span>
+                <span className="text-[10px] text-slate-300 uppercase font-extrabold tracking-wider">Urgency Trigger Detected</span>
               </div>
             </div>
           </section>
