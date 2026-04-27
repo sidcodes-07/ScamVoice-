@@ -2,16 +2,36 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { AnalysisResult } from '@/lib/analyzer';
+import { DEMO_FINAL_RESULT } from '@/data/demo-transcripts';
 
 export default function AnalysisResultPage() {
   const router = useRouter();
 
+  const [result, setResult] = useState<AnalysisResult | null>(null);
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem('analysisResult');
+    if (stored) {
+      try {
+        setResult(JSON.parse(stored));
+      } catch (e) {
+        console.error('Error parsing stored result:', e);
+        setResult(DEMO_FINAL_RESULT);
+      }
+    } else {
+      setResult(DEMO_FINAL_RESULT);
+    }
+  }, []);
+
   const handleShare = async () => {
+    if (!result) return;
     if (navigator.share) {
       try {
         await navigator.share({
           title: 'ScamVoice AI Alert',
-          text: 'I just used ScamVoice AI to analyze a suspicious call. High risk detected!',
+          text: `ScamVoice AI detected a ${result.verdict} with ${result.risk_score}% risk. Summary: ${result.summary}`,
           url: window.location.href,
         });
       } catch (err) {
@@ -21,6 +41,18 @@ export default function AnalysisResultPage() {
       alert('Sharing is not supported on this browser.');
     }
   };
+
+  if (!result) return <div className="bg-[#0A0F1E] min-h-screen flex items-center justify-center text-white uppercase tracking-widest font-bold">Loading Analysis...</div>;
+
+  const isScam = result.verdict === 'SCAM';
+  const isSuspicious = result.verdict === 'SUSPICIOUS';
+  const colorClass = isScam ? '#E24B4A' : isSuspicious ? '#F2994A' : '#2E7D32';
+  const bgClass = isScam ? 'bg-[#E24B4A]' : isSuspicious ? 'bg-[#F2994A]' : 'bg-[#2E7D32]';
+  const textClass = isScam ? 'text-[#E24B4A]' : isSuspicious ? 'text-[#F2994A]' : 'text-[#2E7D32]';
+  const borderClass = isScam ? 'border-[#E24B4A]' : isSuspicious ? 'border-[#F2994A]' : 'border-[#2E7D32]';
+  const lightBgClass = isScam ? 'bg-[#E24B4A]/10' : isSuspicious ? 'bg-[#F2994A]/10' : 'bg-[#2E7D32]/10';
+  const shadowClass = isScam ? 'shadow-[#E24B4A]/20' : isSuspicious ? 'shadow-[#F2994A]/20' : 'shadow-[#2E7D32]/20';
+
 
   return (
     <div className="bg-[#0A0F1E] text-on-surface min-h-screen pb-32 font-['Plus_Jakarta_Sans']">
@@ -48,31 +80,40 @@ export default function AnalysisResultPage() {
             {/* Outer Track */}
             <div className="absolute inset-0 rounded-full border-[12px] border-[#161E31] shadow-inner"></div>
             {/* Conic Progress */}
-            <div className="risk-ring absolute inset-0 mask-[radial-gradient(transparent_58%,white_60%)] shadow-2xl"></div>
+            <div 
+              className="absolute inset-0 rounded-full border-[12px] transition-all duration-1000"
+              style={{ 
+                borderColor: colorClass,
+                clipPath: `polygon(50% 50%, -50% -50%, ${result.risk_score > 50 ? '150% -50%, 150% 150%, -50% 150%, ' : ''}-50% 50%)`,
+                transform: `rotate(${result.risk_score * 3.6}deg)`
+              }}
+            ></div>
             {/* Internal Content */}
             <div className="text-center z-10">
-              <span className="block text-6xl font-extrabold text-white leading-none mb-2">91%</span>
+              <span className="block text-6xl font-extrabold text-white leading-none mb-2">{result.risk_score}%</span>
               <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">LIKELIHOOD</span>
             </div>
           </div>
-          <div className="mt-10 bg-[#E24B4A] px-8 py-3 rounded-full border-2 border-white/20 ambient-shadow flex items-center gap-3">
+          <div className={`${bgClass} px-8 py-3 rounded-full border-2 border-white/20 ambient-shadow flex items-center gap-3 mt-10`}>
             <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
-            <span className="font-bold text-sm text-white uppercase tracking-widest">SCAM DETECTED</span>
+            <span className="font-bold text-sm text-white uppercase tracking-widest">{result.verdict} DETECTED</span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left Column: Evidence */}
           <section>
-            <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">KEY EVIDENCE</h3>
-            <div className="bg-[#161E31] rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-[#2A354F] border-l-[6px] border-l-[#E24B4A] h-full">
-              <span className="material-symbols-outlined text-[#E24B4A] text-2xl mb-4 block fill opacity-20">format_quote</span>
+            <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">AI SUMMARY</h3>
+            <div className={`bg-[#161E31] rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-[#2A354F] border-l-[6px] ${borderClass} h-full`}>
+              <span className={`material-symbols-outlined ${textClass} text-2xl mb-4 block fill opacity-20`}>format_quote</span>
               <p className="text-white font-medium text-base italic leading-relaxed mb-6">
-                "Your account will freeze immediately unless you verify your identity through the external secure portal we are sending..."
+                "{result.summary}"
               </p>
               <div className="flex items-center gap-3 py-3 border-t border-[#2A354F]">
-                <span className="w-3 h-3 rounded-full bg-[#E24B4A] animate-pulse"></span>
-                <span className="text-[10px] text-slate-300 uppercase font-extrabold tracking-wider">Urgency Trigger Detected</span>
+                <span className={`w-3 h-3 rounded-full ${bgClass} animate-pulse`}></span>
+                <span className="text-[10px] text-slate-300 uppercase font-extrabold tracking-wider">
+                  Type: {result.scam_type} • Language: {result.language_detected}
+                </span>
               </div>
             </div>
           </section>
@@ -81,61 +122,69 @@ export default function AnalysisResultPage() {
           <section>
             <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">WHAT THEY DID</h3>
             <div className="space-y-4">
-              {/* Tactic Row 1 */}
-              <div className="bg-white/5 border border-white/10 p-5 rounded-2xl flex justify-between items-center transition-all hover:bg-white/10">
-                <div className="flex items-center gap-4">
-                  <div className="p-2 bg-[#E24B4A]/10 rounded-lg">
-                    <span className="material-symbols-outlined text-[#E24B4A]">alarm</span>
+              {result.detected_tactics.length > 0 ? (
+                result.detected_tactics.map((tactic, i) => (
+                  <div key={i} className="bg-white/5 border border-white/10 p-5 rounded-2xl flex justify-between items-center transition-all hover:bg-white/10">
+                    <div className="flex items-center gap-4">
+                      <div className={`p-2 ${lightBgClass} rounded-lg`}>
+                        <span className={`material-symbols-outlined ${textClass}`}>
+                          {tactic.tactic.toLowerCase().includes('urgency') ? 'alarm' : 
+                           tactic.tactic.toLowerCase().includes('impersonation') ? 'badge' : 
+                           tactic.tactic.toLowerCase().includes('credential') ? 'key' : 'warning'}
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-bold text-white text-sm">{tactic.tactic}</span>
+                        <span className="text-[10px] text-slate-400 italic">"{tactic.evidence.length > 50 ? tactic.evidence.substring(0, 50) + '...' : tactic.evidence}"</span>
+                      </div>
+                    </div>
+                    <span className={`${tactic.severity === 'HIGH' ? bgClass : 'bg-[#161E31]'} text-white px-3 py-1 rounded-md text-[9px] font-black uppercase`}>
+                      {tactic.severity}
+                    </span>
                   </div>
-                  <span className="font-bold text-white text-sm">Sense of Urgency</span>
+                ))
+              ) : (
+                <div className="bg-white/5 border border-white/10 p-8 rounded-2xl text-center">
+                  <span className="material-symbols-outlined text-slate-500 text-4xl mb-2">check_circle</span>
+                  <p className="text-slate-400 text-sm font-medium">No malicious tactics detected in this transcript.</p>
                 </div>
-                <span className="bg-[#E24B4A] text-white px-3 py-1 rounded-md text-[9px] font-black uppercase">HIGH</span>
-              </div>
-              {/* Tactic Row 2 */}
-              <div className="bg-white/5 border border-white/10 p-5 rounded-2xl flex justify-between items-center transition-all hover:bg-white/10">
-                <div className="flex items-center gap-4">
-                  <div className="p-2 bg-[#E24B4A]/10 rounded-lg">
-                    <span className="material-symbols-outlined text-[#E24B4A]">badge</span>
-                  </div>
-                  <span className="font-bold text-white text-sm">Impersonation</span>
-                </div>
-                <span className="bg-[#E24B4A] text-white px-3 py-1 rounded-md text-[9px] font-black uppercase">HIGH</span>
-              </div>
-              {/* Tactic Row 3 */}
-              <div className="bg-white/5 border border-white/10 p-5 rounded-2xl flex justify-between items-center transition-all hover:bg-white/10">
-                <div className="flex items-center gap-4">
-                  <div className="p-2 bg-slate-700/50 rounded-lg">
-                    <span className="material-symbols-outlined text-slate-300">terminal</span>
-                  </div>
-                  <span className="font-bold text-white text-sm">Technical Jargon</span>
-                </div>
-                <span className="bg-[#161E31] text-white px-3 py-1 rounded-md text-[9px] font-black uppercase">MEDIUM</span>
-              </div>
+              )}
             </div>
           </section>
         </div>
 
         {/* Action Box */}
         <section className="mt-10 mb-12">
-          <div className="bg-[#2E7D32]/5 border border-[#2E7D32]/20 p-8 rounded-3xl backdrop-blur-sm">
+          <div className={`${isScam || isSuspicious ? 'bg-[#E24B4A]/5 border-[#E24B4A]/20' : 'bg-[#2E7D32]/5 border-[#2E7D32]/20'} border p-8 rounded-3xl backdrop-blur-sm`}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-[#2E7D32]/20 rounded-lg">
-                <span className="material-symbols-outlined text-[#2E7D32] fill">task_alt</span>
+              <div className={`p-2 ${isScam || isSuspicious ? 'bg-[#E24B4A]/20' : 'bg-[#2E7D32]/20'} rounded-lg`}>
+                <span className={`material-symbols-outlined ${isScam || isSuspicious ? 'text-[#E24B4A]' : 'text-[#2E7D32]'} fill`}>
+                  {isScam || isSuspicious ? 'warning' : 'task_alt'}
+                </span>
               </div>
-              <h3 className="font-black text-[#2E7D32] uppercase tracking-[0.2em] text-xs">SAFE ACTIONS TO TAKE</h3>
+              <h3 className={`font-black ${isScam || isSuspicious ? 'text-[#E24B4A]' : 'text-[#2E7D32]'} uppercase tracking-[0.2em] text-xs`}>RECOMMENDED ACTION</h3>
             </div>
+            <p className="text-white text-lg font-bold mb-6 leading-tight">
+              {result.recommended_action}
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="flex flex-col gap-3">
-                <span className="w-8 h-8 rounded-full bg-[#2E7D32] text-white flex items-center justify-center font-black text-xs shadow-lg shadow-[#2E7D32]/30">1</span>
-                <p className="text-sm text-slate-300 font-medium leading-relaxed">Disconnect the call immediately.</p>
+                <span className={`w-8 h-8 rounded-full ${isScam || isSuspicious ? 'bg-[#E24B4A]' : 'bg-[#2E7D32]'} text-white flex items-center justify-center font-black text-xs shadow-lg`}>1</span>
+                <p className="text-sm text-slate-300 font-medium leading-relaxed">
+                  {isScam ? 'Disconnect the call immediately.' : 'Be cautious with any requests.'}
+                </p>
               </div>
               <div className="flex flex-col gap-3">
-                <span className="w-8 h-8 rounded-full bg-[#2E7D32] text-white flex items-center justify-center font-black text-xs shadow-lg shadow-[#2E7D32]/30">2</span>
-                <p className="text-sm text-slate-300 font-medium leading-relaxed">Ignore any links sent via SMS.</p>
+                <span className={`w-8 h-8 rounded-full ${isScam || isSuspicious ? 'bg-[#E24B4A]' : 'bg-[#2E7D32]'} text-white flex items-center justify-center font-black text-xs shadow-lg`}>2</span>
+                <p className="text-sm text-slate-300 font-medium leading-relaxed">
+                  {isScam ? 'Report the number to Cyber Crime portal.' : 'Verify the caller through official app.'}
+                </p>
               </div>
               <div className="flex flex-col gap-3">
-                <span className="w-8 h-8 rounded-full bg-[#2E7D32] text-white flex items-center justify-center font-black text-xs shadow-lg shadow-[#2E7D32]/30">3</span>
-                <p className="text-sm text-slate-300 font-medium leading-relaxed">Report number in app logs.</p>
+                <span className={`w-8 h-8 rounded-full ${isScam || isSuspicious ? 'bg-[#E24B4A]' : 'bg-[#2E7D32]'} text-white flex items-center justify-center font-black text-xs shadow-lg`}>3</span>
+                <p className="text-sm text-slate-300 font-medium leading-relaxed">
+                  Share this result to warn others.
+                </p>
               </div>
             </div>
           </div>
@@ -144,11 +193,15 @@ export default function AnalysisResultPage() {
         {/* Action Buttons */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <button 
-            onClick={() => window.open('tel:', '_self')}
-            className="bg-[#E24B4A] py-5 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 active:scale-95 shadow-xl shadow-[#E24B4A]/20 hover:brightness-110 group"
+            onClick={() => window.open(isScam ? 'https://cybercrime.gov.in' : 'tel:', '_blank')}
+            className={`${bgClass} py-5 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 active:scale-95 shadow-xl ${shadowClass} hover:brightness-110 group`}
           >
-            <span className="material-symbols-outlined text-white text-2xl group-hover:rotate-12 transition-transform">call</span>
-            <span className="font-bold text-white uppercase tracking-widest">CALL TRUSTED</span>
+            <span className="material-symbols-outlined text-white text-2xl group-hover:rotate-12 transition-transform">
+              {isScam ? 'policy' : 'call'}
+            </span>
+            <span className="font-bold text-white uppercase tracking-widest">
+              {isScam ? 'REPORT CRIME' : 'CALL TRUSTED'}
+            </span>
           </button>
           <button 
             onClick={handleShare}

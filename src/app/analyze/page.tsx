@@ -16,10 +16,48 @@ export default function AnalyzeTranscriptPage() {
     }
   };
 
-  const handleAnalyze = () => {
-    console.log('analyze clicked');
-    // For now, redirect to result anyway as per user flow
-    router.push('/result');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const handleAnalyze = async () => {
+    if (!transcript || transcript.trim().length === 0) {
+      setError('Please paste a transcript to analyze.');
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+    setStatusMessage('Checking for manipulation patterns...');
+
+    try {
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ transcript }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Analysis failed');
+      }
+
+      const result = await response.json();
+      
+      // Store result in sessionStorage
+      sessionStorage.setItem('analysisResult', JSON.stringify(result));
+
+      if (result.trigger_panic_mode === true) {
+        router.push('/emergency');
+      } else {
+        router.push('/result');
+      }
+    } catch (err) {
+      console.error('Analysis error:', err);
+      setError('Analysis failed. Check your connection and try again.');
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -53,7 +91,8 @@ export default function AnalyzeTranscriptPage() {
             <label className="font-label-bold text-label-bold text-[#0A0F1E]" htmlFor="transcript">CONVERSATION LOG</label>
             <div className="relative">
               <textarea 
-                className="w-full h-64 bg-[#F8F9FA] border-2 border-slate-100 rounded-lg p-md text-[#0A0F1E] font-body-md focus:border-[#E24B4A] focus:ring-0 transition-colors resize-none" 
+                disabled={isLoading}
+                className={`w-full h-64 bg-[#F8F9FA] border-2 ${error ? 'border-red-200' : 'border-slate-100'} rounded-lg p-md text-[#0A0F1E] font-body-md focus:border-[#E24B4A] focus:ring-0 transition-colors resize-none ${isLoading ? 'opacity-50' : ''}`} 
                 id="transcript" 
                 placeholder="Paste text messages or transcribe voice conversations here..."
                 value={transcript}
@@ -95,11 +134,33 @@ export default function AnalyzeTranscriptPage() {
         <section className="flex flex-col items-center gap-md pt-base">
           <button 
             onClick={handleAnalyze}
-            className="w-full bg-[#E24B4A] text-white font-label-bold py-5 rounded-lg shadow-xl shadow-[#E24B4A]/20 transition-all duration-200 active:scale-95 flex items-center justify-center gap-3"
+            disabled={isLoading}
+            className={`w-full ${isLoading ? 'bg-slate-400' : 'bg-[#E24B4A]'} text-white font-label-bold py-5 rounded-lg shadow-xl shadow-[#E24B4A]/20 transition-all duration-200 active:scale-95 flex items-center justify-center gap-3`}
           >
-            ANALYZE NOW
-            <span className="material-symbols-outlined fill">shield_with_heart</span>
+            {isLoading ? (
+              <>
+                <span className="material-symbols-outlined animate-spin">progress_activity</span>
+                ANALYZING...
+              </>
+            ) : (
+              <>
+                ANALYZE NOW
+                <span className="material-symbols-outlined fill">shield_with_heart</span>
+              </>
+            )}
           </button>
+          
+          {isLoading && (
+            <p className="text-xs text-[#E24B4A] font-bold animate-pulse uppercase tracking-widest mt-2">
+              {statusMessage}
+            </p>
+          )}
+
+          {error && (
+            <p className="text-sm text-[#E24B4A] font-medium bg-[#E24B4A]/5 px-4 py-2 rounded-lg border border-[#E24B4A]/20 mt-2">
+              {error}
+            </p>
+          )}
           <div className="flex items-center gap-2 text-slate-500">
             <span className="material-symbols-outlined text-sm">verified_user</span>
             <span className="font-label-sm text-label-sm">Privacy Protected • Logs are not stored</span>
