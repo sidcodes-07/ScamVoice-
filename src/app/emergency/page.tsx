@@ -1,12 +1,30 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { AnalysisResult } from '@/lib/analyzer';
 
 export default function EmergencyPanicPage() {
   const router = useRouter();
+  const [result, setResult] = useState<AnalysisResult | null>(null);
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem('analysisResult');
+    if (stored) {
+      try {
+        setResult(JSON.parse(stored));
+      } catch (e) {
+        console.error('Error parsing stored result:', e);
+      }
+    }
+  }, []);
 
   const handleCallTrusted = () => {
     window.open('tel:', '_self');
+  };
+
+  const handleHangUp = () => {
+    sessionStorage.removeItem('analysisResult');
+    router.push('/home');
   };
 
   return (
@@ -33,13 +51,19 @@ export default function EmergencyPanicPage() {
 
           {/* Warning Strip */}
           <div className="w-full py-base bg-[#E24B4A] border-y border-white/20 shadow-xl">
-            <span className="font-label-bold text-white block">SCAMVOICE DETECTED: Known fear-based scam pattern identified.</span>
+            <span className="font-label-bold text-white block">
+              {result ? `THREAT DETECTED: ${result.scam_type}` : 'SCAMVOICE DETECTED: Known scam pattern identified.'}
+            </span>
           </div>
 
           {/* Headline Section */}
           <div className="space-y-sm px-base">
-            <h1 className="font-headline-xl text-white leading-tight">This Looks Like a Scam</h1>
-            <p className="font-body-lg text-slate-300">Digital arrest scams are fake. No government agency demands payment by phone.</p>
+            <h1 className="font-headline-xl text-white leading-tight">
+              {result?.verdict === 'SCAM' ? 'Active Scam Detected' : 'Highly Suspicious Call'}
+            </h1>
+            <p className="font-body-lg text-slate-300">
+              {result?.summary || 'The caller is using manipulation tactics common in financial fraud.'}
+            </p>
           </div>
 
           {/* Bento/Grid Action Advice */}
@@ -82,7 +106,7 @@ export default function EmergencyPanicPage() {
         {/* Sticky Action Footer */}
         <footer className="w-full mt-lg pb-xl space-y-gutter px-base">
           <button 
-            onClick={() => router.push('/home')}
+            onClick={handleHangUp}
             className="w-full py-lg bg-[#E24B4A] text-white font-label-bold text-lg rounded-xl shadow-2xl transition-all duration-200 active:scale-95 border-2 border-white/30"
           >
             HANG UP NOW
