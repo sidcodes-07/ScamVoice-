@@ -105,13 +105,13 @@ export default function EmergencyPanicPage() {
 
         {/* Sticky Action Footer */}
         <footer className="w-full mt-lg pb-xl space-y-gutter px-base">
-          <button 
+          <button
             onClick={handleHangUp}
             className="w-full py-lg bg-[#E24B4A] text-white font-label-bold text-lg rounded-xl shadow-2xl transition-all duration-200 active:scale-95 border-2 border-white/30"
           >
             HANG UP NOW
           </button>
-          <button 
+          <button
             onClick={handleCallTrusted}
             className="w-full py-lg bg-transparent border-2 border-white text-white font-label-bold text-lg rounded-xl transition-all duration-200 active:scale-95"
           >
@@ -126,9 +126,9 @@ export default function EmergencyPanicPage() {
         </div>
 
         {/* Background Identity Image */}
-        <img 
-          className="absolute inset-0 w-full h-full object-cover -z-20 opacity-5" 
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpP8zuXEoiOUIdld0ni3-lxCcgILp5Zd0jV1kopt1MDsQiGoHe9SzLzvPLvhTrj1xcMxDCscLlJEkQVPO5ExoQJm29TfT67Td59yUKV9ZIaN_lrWMHIepPffNYV8LrIILsmjAY_X5y7twzirUoYFZiJO3m9ukrlmQktjzgP67yAdKDu_E0ugFoWIChxw1oxlYslT8JAqz7aqET_e9QeZJQUJ3nClYSFaNA1tUBeO3Z2VEPm2cHGAY76WPgzqCBE9wbx8eUxqAnwyo" 
+        <img
+          className="absolute inset-0 w-full h-full object-cover -z-20 opacity-5"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpP8zuXEoiOUIdld0ni3-lxCcgILp5Zd0jV1kopt1MDsQiGoHe9SzLzvPLvhTrj1xcMxDCscLlJEkQVPO5ExoQJm29TfT67Td59yUKV9ZIaN_lrWMHIepPffNYV8LrIILsmjAY_X5y7twzirUoYFZiJO3m9ukrlmQktjzgP67yAdKDu_E0ugFoWIChxw1oxlYslT8JAqz7aqET_e9QeZJQUJ3nClYSFaNA1tUBeO3Z2VEPm2cHGAY76WPgzqCBE9wbx8eUxqAnwyo"
           alt="Abstract Background"
         />
       </main>
